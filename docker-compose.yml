@@ -1,0 +1,23 @@
+version: "3"
+services:
+  #client_web:
+  #  build:
+  #    context: "./web"
+  #    dockerfile: Dockerfile
+  #  ports:
+  #      - "8081:8081"
+  #  depends_on:
+  #    - server
+  #  volumes:
+  #    - front-volume:/home/server/public/bin/
+  #  restart: always
+  server:
+    build:
+      context: "./server/"
+      dockerfile: Dockerfile
+    ports:
+        - "8080:8080"
+    restart: always
+
+volumes:
+  front-volume:
