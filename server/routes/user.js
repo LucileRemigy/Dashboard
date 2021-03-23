@@ -84,7 +84,7 @@ router.get("/executewidgets", async function (req, res) {
         funcArgs.push(data[widgetName]["args"][arg]);
       }
       info = await functions[data[widgetName]["type"]](...funcArgs);
-
+      console.log("jpp", info);
       result[widgetName] = info["value"];
     }
     console.log("le result  est", result);

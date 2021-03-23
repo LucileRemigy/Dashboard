@@ -36,7 +36,7 @@ async function getTweet(idAuthTweet) {
     //console.log("le body est:", res.body.data[0].text);
     return { value: res.body.data[0].text };
   } else {
-    throw new Error("Unsuccessful request");
+    return { value: "error" };
   }
 }
 
@@ -55,6 +55,7 @@ async function getFollowers(idAuthFollower) {
     })
     .catch((error) => {
       console.log("l'erreur est", error);
+      return { value: "error" };
     });
 }
 
