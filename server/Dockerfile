@@ -3,4 +3,5 @@ WORKDIR /home/server/
 COPY package.json ./
 RUN npm install
 COPY ./ ./
+EXPOSE 8080
 ENTRYPOINT ["npm", "start"]
