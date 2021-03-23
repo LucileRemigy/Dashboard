@@ -58,32 +58,6 @@ async function SignIn(email, password) {
     });
 }
 
-function isConnected(user) {
-  //Check Log
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      var uid = user.uid;
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
-}
-
-function writeData() {
-  //function writeUserData(userId, widget, isEnable) {
-  database.ref("widgets").set({}, function (error) {
-    if (error) {
-      console.log("Failed with error: " + error);
-    } else {
-      console.log("success");
-    }
-  });
-}
-
 function createWidget(uid, typeWidget, argsWidget, nameWidget) {
   var obj = {
     args: argsWidget,
@@ -105,7 +79,6 @@ function getUserWidget(uid) {
     .get()
     .then((data) => {
       if (data.exists()) {
-        console.log("je retourne:", data.val());
         return data.val();
       } else {
         console.log("No data available");
@@ -117,7 +90,7 @@ function getUserWidget(uid) {
 }
 
 function getWidgetInfo() {
-  database
+  return database
     .ref("/widgets")
     .get()
     .then((data) => {
@@ -148,9 +121,9 @@ function removeWidget(widget, uid) {
 module.exports = {
   SignIn,
   SignUp,
-  writeData,
   getWidgetInfo,
   createWidget,
   getUserWidget,
   removeWidget,
+  firebase,
 };

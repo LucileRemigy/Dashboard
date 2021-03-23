@@ -2,24 +2,28 @@
   <section class="container">
     <div>
       <Logo />
+      <vue-up></vue-up>
       <h1 class="title">Dashboard</h1>
-      <b-form-group label="Enter your Email" label-for="username">
-        <b-form-input
-          id="username"
-          v-model="email"
-          type="email"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Enter your Password" label-for="pw">
-        <b-form-input id="pw" v-model="password" type="password"></b-form-input>
-      </b-form-group>
-      <div class="links">
-        <a href="https://nuxtjs.org/" class="button--green"> Sign In </a>
-        <a href="https://github.com/nuxt/nuxt.js" class="button--grey">
-          Sign Up
-        </a>
-      </div>
+      <b-form id="signinForm" action="/signin" method="POST">
+        <b-form-group label="Enter your Email" label-for="username">
+          <b-form-input
+            id="username"
+            v-model="email"
+            type="email"
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group label="Enter your Password" label-for="pw">
+          <b-form-input
+            id="pw"
+            v-model="password"
+            type="password"
+          ></b-form-input>
+        </b-form-group>
+        <div class="links">
+          <a class="button--green" @click="signIn"> Sign In </a>
+          <a class="button--grey" @click="signUp"> Sign Up </a>
+        </div>
+      </b-form>
     </div>
   </section>
 </template>
@@ -36,8 +40,38 @@ export default {
   watch: {},
   mounted() {},
   methods: {
-    SignIn() {},
-    SignUp() {},
+    async signIn() {
+      const emailUser = this.email;
+      const pwUser = this.password;
+      const resp = await this.$axios.$post('/signin', {
+        email: emailUser,
+        password: pwUser,
+      });
+      console.log('la réponse est ', resp);
+      if (resp.value === 'ok') {
+        this.$router.push('/dashboard');
+      }
+    },
+    async signUp() {
+      const emailUser = this.email;
+      const pwUser = this.password;
+      const resp = await this.$axios.$post(
+        '/signup',
+        {
+          email: emailUser,
+          password: pwUser,
+        },
+        { withCredentials: true, credentials: 'include' }
+      );
+      if (resp.value === 'ok') {
+        console.log('la popup');
+        this.$popup({
+          message: 'You are registered !',
+          color: '#1DE1E22',
+          backgroundColor: 'rgba(135, 233, 144)',
+        });
+      }
+    },
   },
 };
 </script>
@@ -76,6 +110,9 @@ export default {
 </style>
 
 <!--
+
+required
+
 <Logo />
       <h1 class="title">Dashboard</h1>
 <div class="links">

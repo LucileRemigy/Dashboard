@@ -13,6 +13,10 @@ var weather = require("./routes/meteoWidget");
 var router = require("./routes/user");
 const aboutRouter = require("./routes/about");
 
+const corsOptions = {
+  exposedHeaders: ["Authorization", "Cookies", "Content-Type"],
+};
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
@@ -49,7 +53,13 @@ app.post("/signin", async function (req, res) {
   const valid = await db
     .SignIn(req.body.email, req.body.password)
     .then((response) => {
-      res.cookie("uid", response.uid, { maxAge: 900000 });
+      /*console.log("mon uid est ", response.uid);
+      res.cookie("uid", response.uid, {
+        maxAge: 9000000,
+        path: "/",
+        domain: "192.168.1.24",
+      });*/
+      console.log("nice signin");
       return res.json({ value: "ok" });
     })
     .catch((error) => {
@@ -59,7 +69,7 @@ app.post("/signin", async function (req, res) {
 
 app.post("/signup", function (req, res) {
   db.SignUp(req.body.email, req.body.password);
-  return res.json({ SignUp: "OK" });
+  return res.json({ value: "ok" });
 });
 
 app.get("/", function (req, res) {

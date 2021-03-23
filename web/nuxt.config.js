@@ -14,10 +14,14 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@/assets/scss/main.scss'],
+
+  styleResources: {
+    scss: '@/assets/scss/variables.scss',
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '~/plugins/vueup', ssr: false }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -32,8 +36,22 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt',
   ],
+
+  bootstrapVue: {
+    bootstrapCSS: false,
+    bootstrapVueCSS: false,
+  },
+
+  axios: {
+    baseURL: 'http://localhost:8080',
+    credentials: false,
+    // proxy: true,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-}
+};

@@ -16,7 +16,7 @@ const accessTokenSecret = "6ZX4Z0vj0JYnhAc8NAnIHMOr9clN0lKq6FFu6SuzlV3ii";
 const endpointUrlTweet = "https://api.twitter.com/2/tweets/search/recent";
 
 async function getTweet(idAuthTweet) {
-  console.log("id :", idAuthTweet);
+  //console.log("id :", idAuthTweet);
   // Edit query parameters below
   // specify a search query, and any additional fields that are required
   // by default, only the Tweet ID and text fields are returned
@@ -33,16 +33,14 @@ async function getTweet(idAuthTweet) {
   });
 
   if (res.body) {
-    console.log("le body est:", res.body);
-    return res.body;
+    //console.log("le body est:", res.body.data[0].text);
+    return { value: res.body.data[0].text };
   } else {
     throw new Error("Unsuccessful request");
   }
 }
 
 async function getFollowers(idAuthFollower) {
-  console.log("id: ", idAuthFollower);
-
   const getTwitterFollowers = twitterFollower({
     consumer_key: apiKey,
     consumer_secret: apiSecretKey,
@@ -50,11 +48,10 @@ async function getFollowers(idAuthFollower) {
     access_token_secret: accessTokenSecret,
   });
 
-  var nb_follower = getTwitterFollowers([idAuthFollower]);
-  nb_follower
-    .then(() => {
-      console.log("nombre de follower:", nb_follower);
-      return { number: nb_follower };
+  return getTwitterFollowers([idAuthFollower])
+    .then((nb_follower) => {
+      //console.log("nombre de follower skelmy:", nb_follower[idAuthFollower]);
+      return { value: nb_follower[idAuthFollower] };
     })
     .catch((error) => {
       console.log("l'erreur est", error);
