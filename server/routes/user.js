@@ -47,10 +47,23 @@ router.get("/getuserwidget", async function (req, res) {
   return res.json(data);
 });
 
-router.get("/removewidget", async function (req, res) {
+router.post("/removewidget", async function (req, res) {
   var user = db.firebase.auth().currentUser;
-  db.removeWidget(req.body.widget, user.uid /* req.cookies.uid*/);
+  console.log("user uid: ", req.body);
+  db.removeWidget(req.body.widget, user.uid);
   console.log("remove good");
+});
+
+router.get("/signout", async function (req, res) {
+  db.firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log("nice signout");
+    })
+    .catch((error) => {
+      console.log("bad signout");
+    });
 });
 
 router.get("/executewidgets", async function (req, res) {
@@ -63,20 +76,15 @@ router.get("/executewidgets", async function (req, res) {
   var user = db.firebase.auth().currentUser;
   let result = {};
   let data = await db.getUserWidget(user.uid);
-  //console.log("lalalala,", data);
+
   try {
     for (widgetName in data) {
-      //console.log("Widget to execute:\nName =>", widgetName);
-      //console.log("Widget type =>", data[widgetName]["type"]);
       let funcArgs = [];
       for (arg in data[widgetName]["args"]) {
-        //console.log("Arg => ", arg, `${arg} =>`, data[widgetName]["args"][arg]);
         funcArgs.push(data[widgetName]["args"][arg]);
       }
-      //console.log("Function args =>", funcArgs);
       info = await functions[data[widgetName]["type"]](...funcArgs);
-      //console.log("l'info est", info, " et le wod", widgetName);
-      console.log("l'info est ", info["value"]);
+
       result[widgetName] = info["value"];
     }
     console.log("le result  est", result);

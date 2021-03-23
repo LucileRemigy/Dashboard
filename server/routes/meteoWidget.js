@@ -13,7 +13,7 @@ async function getWeather(city) {
     city +
     "&appid=" +
     apiKey +
-    "&units=metric&lang=fr";
+    "&units=metric&lang=en";
 
   let res = await axios.get(path);
   let weather = res.data.weather;
@@ -27,7 +27,7 @@ async function getTemperature(city) {
     city +
     "&appid=" +
     apiKey +
-    "&units=metric&lang=fr";
+    "&units=metric&lang=en";
 
   let res = await axios.get(path);
 

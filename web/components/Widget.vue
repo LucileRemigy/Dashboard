@@ -20,6 +20,9 @@
           The weather in {{ target }} is {{ result }} !
         </h1>
       </b-card-text>
+      <b-button variant="success" @click="removeWidgets"
+        >Remove Widget</b-button
+      >
     </b-card>
   </b-container>
 </template>
@@ -47,7 +50,12 @@ export default {
     },
   },
   data() {},
-  methods: {},
+  methods: {
+    async removeWidgets() {
+      const widgetRemove = { widget: this.title };
+      await this.$axios.$post('/user/removewidget', widgetRemove);
+    },
+  },
 };
 </script>
 <style lang=""></style>

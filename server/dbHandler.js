@@ -111,6 +111,7 @@ function removeWidget(widget, uid) {
     .ref("/activeWidgets/" + uid + "/" + widget + "/")
     .remove()
     .then(() => {
+      console.log("nice remove");
       return;
     })
     .catch((error) => {

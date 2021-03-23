@@ -1,6 +1,13 @@
 <template>
   <b-container>
     <DSNavBar></DSNavBar>
+    <b-container
+      v-if="Object.keys(userWidget).length === 0"
+      class="text-center align-middle"
+    >
+      <b-spinner label="Spinning"></b-spinner>
+    </b-container>
+
     <div v-for="(item, name) in userWidget" :key="name">
       <div v-for="(itemR, nameW) in resultWidget" :key="nameW">
         <div v-if="name == nameW">

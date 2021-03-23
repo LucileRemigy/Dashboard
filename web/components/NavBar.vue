@@ -11,7 +11,7 @@
       </b-navbar-nav>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-navbar-nav class="ml-auto">
-        <b-button size="sm" class="my-2 my-sm-0" type="submit">
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">
           Sign out
         </b-button>
       </b-navbar-nav>
@@ -51,6 +51,10 @@ export default {
       const resp = await this.$axios.$get('/user/getwidgetinfo');
       this.showWidgets = true;
       this.items = resp;
+    },
+    signOut() {
+      // this.$axios.$get('/user/signout');
+      this.$router.push('/');
     },
   },
 };
